@@ -1,0 +1,12 @@
+# AWS specific variables
+
+access_key: xxx
+secret_access_key: bbb
+endpoint: west-1.cp.cloud.nifty.com
+image_id: 26
+key_name: ansible_test
+security_group: webfw
+instance_type: mini
+availability_zone: west-11
+accounting_type: 2
+ip_type: static

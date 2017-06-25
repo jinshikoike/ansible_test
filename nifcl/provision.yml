@@ -1,0 +1,48 @@
+---
+
+- name: Provision instances in AWS
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars_files:
+  - group_vars/all
+
+  tasks:
+  # Creates a new ec2 key pair named `example` if not present using provided key
+  # material.  This could use the 'file' lookup plugin to pull this off disk.
+  - name: pip install requests
+    pip:
+      name: "requests"
+  
+  - name: launch server
+    niftycloud:
+      access_key: "{{ access_key }}"
+      secret_access_key: "{{ secret_access_key }}"
+      endpoint: "{{ endpoint }}"
+      instance_id: "web001"
+      state: "running"
+      image_id: "26"
+      key_name: "dummykey"
+      security_group: "webfw"
+      instance_type: "mini"
+      availability_zone: "west-11"
+      accounting_type: "2"
+      ip_type: "static"
+      # startup_script: "roles/infrastructure/template/startup_script"
+      # startup_script_vars:
+      #   dummy_var: "DUMMY"
+      # network_interface:
+      #   - network_id: net-COMMON_GLOBAL
+      #     ipAddress: "0.0.0.0"
+
+  # - name: Regist server to load balancer
+  #   niftycloud:
+  #     access_key: "YOUR ACCESS KEY"
+  #     secret_access_key: "YOUR SECRET ACCESS KEY"
+  #     endpoint: "west-1.cp.cloud.nifty.com"
+  #     instance_id: "web001"
+  #     instance_port: 80
+  #     loadbalancer_name: "lb001"
+  #     loadbalancer_port: 80
+  #     state: "present"

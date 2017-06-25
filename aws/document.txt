@@ -1,0 +1,52 @@
+# AWS
+  ansible-playbook -i hosts provision.yml
+
+# install python
+
+# install pip
+
+# ansibleに必要なパッケージのダウンロード
+  sudo yum install -y gcc openssl python-devel libxml2-devel libxslt-devel openssl-devel
+
+# pip install ansible boto
+  
+# botoを読み込ませる
+boto libraryが読み込めない場合がある。
+その場合はansible_python_interpreterを設定する必要がある。
+
+- hosts
+[localhost]
+127.0.0.1 ansible_python_interpreter=/usr/local/bin/python
+
+# access key の設定
+環境変数に以下を設定する
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION
+
+# ssh keyの設定
+
+- keyの生成をしておきます。後で起動したec2にアクセスするために使用します。
+ssh-keygen -t rsa -b 4096 -C 'ansible test'
+
+- ansible.cfgでの設定
+生成したkeyを使用するように明示
+今回起動後のec2にアクセスすらためhost_key_checkingを事前に行えない。そのためhost_key_checkingをFalseに設定しておく。
+
+[defaults]
+private_key_file=~/.ssh/id_rsa
+host_key_checking = False
+
+
+# local pcのntp の設定
+clock timeがおかしいとAuthenticateが通らないバグがあります。
+Authenticate系のエラーがでた場合はためしてください。
+
+sudo yum -y install ntp
+sudo ntpdate ntp.nict.jp <- 今回は日本標準時に設定
+
+# セキュリティグループの作成
+今回はssh,httpを使用するため、defaultのセキュリティグループを
+ssh,http allow from anywhere の状態で作成を行う
+
+
