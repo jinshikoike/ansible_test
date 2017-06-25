@@ -10,3 +10,11 @@ instance_type: mini
 availability_zone: west-11
 accounting_type: 2
 ip_type: static
+
+instance_ids:
+  - instance_1
+  - isntance_2
+
+instance_port: 80
+loadbalancer_name: "ansibletest"
+loadbalancer_port: 80

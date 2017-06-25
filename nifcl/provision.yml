@@ -20,15 +20,17 @@
       access_key: "{{ access_key }}"
       secret_access_key: "{{ secret_access_key }}"
       endpoint: "{{ endpoint }}"
-      instance_id: "web001"
-      state: "running"
-      image_id: "26"
-      key_name: "dummykey"
-      security_group: "webfw"
-      instance_type: "mini"
-      availability_zone: "west-11"
-      accounting_type: "2"
-      ip_type: "static"
+      instance_id: "{{ item }}"
+      state: "{{ state }}"
+      image_id: "{{ image_id }}"
+      key_name: "{{ key_name }}"
+      security_group: "{{ security_group }}"
+      instance_type: "{{ instance_type }}"
+      availability_zone: "{{ availability_zone }}"
+      accounting_type: "{{ accounting_type }}"
+      ip_type: "{{ ip_type }}"
+    with_items:
+      "{{ instance_ids }}"
       # startup_script: "roles/infrastructure/template/startup_script"
       # startup_script_vars:
       #   dummy_var: "DUMMY"
@@ -37,12 +39,13 @@
       #     ipAddress: "0.0.0.0"
 
   # - name: Regist server to load balancer
-  #   niftycloud:
-  #     access_key: "YOUR ACCESS KEY"
-  #     secret_access_key: "YOUR SECRET ACCESS KEY"
-  #     endpoint: "west-1.cp.cloud.nifty.com"
-  #     instance_id: "web001"
-  #     instance_port: 80
-  #     loadbalancer_name: "lb001"
-  #     loadbalancer_port: 80
+  #   niftycloud_lb:
+  #     access_key: "{{ access_key }}"
+  #     secret_access_key: "{{ secret_access_key }}"
+  #     endpoint: "{{ endpoint }}"
+  #     instance_id: "{{ item }}"
+  #     instance_port: "{{ instance_port }}"
+  #     loadbalancer_name: "{{ loadbalancer_name }}"
+  #     loadbalancer_port: "{{ loadbalancer_port }}"
   #     state: "present"
+  #   with_items: "{{ instance_ids }}"
